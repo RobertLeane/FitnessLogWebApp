@@ -1,3 +1,8 @@
+/* GET about page */
+const about = function(req, res){
+  res.render('about', { title: 'About - Fitness Log' });
+};
+
 /* GET login page */
 const login = function(req, res){
   res.render('login', { title: 'Login - Fitness Log' });
@@ -9,6 +14,7 @@ const register = function(req, res){
 };
 
 module.exports = {
+  about,
   login,
   register
 };

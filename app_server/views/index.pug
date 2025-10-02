@@ -15,45 +15,33 @@ block content
             .card-body.py-3
               .d-flex.justify-content-between.align-items-center
                 h4.mb-0 &#x1F3C6; Sessions
-                h4.mb-0.text-end 3
+                h4.mb-0.text-end= summary.sessions
           .card.border-dark-subtle.shadow-sm
             .card-body.py-3
               .d-flex.justify-content-between.align-items-center
                 h4.mb-0 &#x23F1;&#xFE0F; Total Time
-                h4.mb-0.text-end 2h 15m
+                h4.mb-0.text-end= summary.totalTime
           .card.border-dark-subtle.shadow-sm
             .card-body.py-3
               .d-flex.justify-content-between.align-items-center
                 h4.mb-0 &#x26A1; Average Duration
-                h4.mb-0.text-end 45m
+                h4.mb-0.text-end= summary.averageDuration
       .col-12.col-lg-6.order-1.order-lg-0
         h2.h4.mb-3
           strong Your Workouts
-        .d-grid.gap-3
-          .card.border-dark-subtle.shadow-sm
-            .card-body
-              .d-flex.justify-content-between.align-items-center
-                h4.mb-0 Running
-                p.mb-0.text-nowrap Sep 16, 2025
-              .d-flex.flex-wrap.gap-3.mt-2
-                h6.text-muted.mb-0 &#x23F1;&#xFE0F; 60 Minutes
-                span.badge.bg-warning.text-dark High Intensity
-              p.card-text.mt-2 &#x1F4DD; Morning run in the park
-          .card.border-dark-subtle.shadow-sm
-            .card-body
-              .d-flex.justify-content-between.align-items-center
-                h4.mb-0 Weight Training
-                p.mb-0.text-nowrap Sep 17, 2025
-              .d-flex.flex-wrap.gap-3.mt-2
-                h6.text-muted.mb-0 &#x23F1;&#xFE0F; 45 Minutes
-                span.badge.bg-danger Very High Intensity
-              p.card-text.mt-2 &#x1F4DD; Chest and Triceps Focus
-          .card.border-dark-subtle.shadow-sm
-            .card-body
-              .d-flex.justify-content-between.align-items-center
-                h4.mb-0 Yoga
-                p.mb-0.text-nowrap Sep 17, 2025
-              .d-flex.flex-wrap.gap-3.mt-2
-                h6.text-muted.mb-0 &#x23F1;&#xFE0F; 30 Minutes
-                span.badge.bg-success Low Intensity
-              p.card-text.mt-2 &#x1F4DD; Evening relaxation session
+        if workouts && workouts.length
+          each workout in workouts
+            .card.border-dark-subtle.shadow-sm.mb-3
+              .card-body
+                .d-flex.justify-content-between.align-items-center
+                  h4.mb-0= workout.title
+                  p.mb-0.text-nowrap= workout.date
+                .d-flex.flex-wrap.gap-3.mt-2
+                  h6.text-muted.mb-0 
+                    | &#x23F1;&#xFE0F; #{workout.duration}
+                  span.badge.bg-warning.text-dark= workout.intensity
+                p.card-text.mt-2 
+                  | &#x1F4DD; #{workout.description}
+        else
+          .alert.alert-info.text-center No workouts found.
+          

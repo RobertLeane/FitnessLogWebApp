@@ -6,6 +6,11 @@ res.render('index', {
     title: 'Hi Robert...', 
     strapline: 'Track your workouts and progress' 
   },
+  summary: {
+    sessions: 3,
+    totalTime: '2h 15m',
+    averageDuration: '45m'
+  },
   workouts: [{ 
     title: 'Running',
     duration: '60 Minutes',
