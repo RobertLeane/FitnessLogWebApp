@@ -1,4 +1,14 @@
 /* GET 'home' page */
+const mongoose = require('mongoose');
+
+const workoutSchema = new mongoose.Schema({
+  title: String,
+  duration: String,
+  description: String,
+  intensity: String,
+  date: String
+});
+
 const homelist = function(req, res){
 res.render('index', {
   title: 'Fitness log App',
