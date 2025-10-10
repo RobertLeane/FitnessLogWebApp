@@ -12,4 +12,4 @@ const dbURI = 'mongodb+srv://loc8r_admin:kfnc8mSnNHXMts28@loc8r.t667etg.mongodb.
     catch (e) {
         console.log("could not connect");
     }
-    require('./locations');
+    require('./workouts');
