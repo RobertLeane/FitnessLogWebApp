@@ -7,33 +7,26 @@ block content
         .card.border-dark-subtle.shadow-sm
           .card-body.p-4
             h1.text-center.mb-4
-              strong About Fitness Log
+              strong= aboutData.title
             
-            p.lead.text-center.mb-4 Your personal fitness tracking companion
+            p.lead.text-center.mb-4= aboutData.tagline
             
             h3.h5.mb-3
-              strong What is Fitness Log?
-            p.mb-4 Fitness Log is a simple and intuitive web application designed to help you track your workouts and monitor your fitness progress. Whether you're a beginner starting your fitness journey or an experienced athlete, our app provides the tools you need to stay motivated and organized.
+              strong What is #{aboutData.appName}?
+            p.mb-4= aboutData.descriptions
             
             h3.h5.mb-3
               strong Key Features
             ul.list-unstyled.mb-4
-              li.mb-2
-                i.bi.bi-check-circle-fill.text-success.me-2
-                | Track workout sessions with detailed information
-              li.mb-2
-                i.bi.bi-check-circle-fill.text-success.me-2
-                | Monitor workout intensity levels
-              li.mb-2
-                i.bi.bi-check-circle-fill.text-success.me-2
-                | View weekly progress summaries
-              li.mb-2
-                i.bi.bi-check-circle-fill.text-success.me-2
-                | Clean, user-friendly interface
+              each feature in aboutData.features
+                li.mb-2
+                  i.bi.bi-check-circle-fill.text-success.me-2
+                  | #{feature}
+              
             
             h3.h5.mb-3
               strong Get Started
-            p.mb-4 Ready to begin your fitness journey? Register for an account to start tracking your workouts and achieving your fitness goals.
+            p.mb-4= aboutData.welcomeMessage
             
             .text-center
               a.btn.btn-primary.btn-lg.me-3(href='/register') Get Started

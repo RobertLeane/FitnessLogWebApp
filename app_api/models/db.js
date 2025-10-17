@@ -5,10 +5,7 @@ mongoose.Promise = global.Promise;
 
 const dbURI = 'mongodb+srv://loc8r_admin:kfnc8mSnNHXMts28@loc8r.t667etg.mongodb.net/Loc8r?retryWrites=true&w=majority';
 
-mongoose.connect(dbURI, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true 
-})
+mongoose.connect(dbURI)
 .then(() => {
   console.log("Mongoose is connected");
 })
@@ -17,3 +14,4 @@ mongoose.connect(dbURI, {
 });
 
 require('./workouts');
+require('./about');
