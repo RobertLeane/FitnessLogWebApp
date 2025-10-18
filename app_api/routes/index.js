@@ -6,7 +6,6 @@ const ctrlWorkouts = require('../controllers/workouts');
 router
   .route('/workouts')
   .get(ctrlWorkouts.workoutsList)
-  .post(ctrlWorkouts.workoutsCreate);
 
 router
   .route('/workouts/:workoutid')

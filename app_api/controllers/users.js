@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
-const Workout = mongoose.model('Workout');
+const Users = mongoose.model('Users');
 
-const othersCreate = function (req, res) {
+const usersReadOne = function (req, res) {
     res
     .status(200)
     .json({"status" : "success"});
 };
 
-const othersReadOne = function (req, res) {
+const usersCreate = function (req, res) {
     res
     .status(200)
     .json({"status" : "success"});
 };
 
 module.exports = {
-    othersCreate,
-    othersReadOne
+    usersReadOne,
+    usersCreate
 };
