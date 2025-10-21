@@ -15,3 +15,4 @@ mongoose.connect(dbURI)
 
 require('./workouts');
 require('./about');
+require('./users');
