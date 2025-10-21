@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ctrlWorkouts = require('../controllers/workouts');
-const ctrlUsers = require('../controllers/Users');
+const ctrlUsers = require('../controllers/users');
 
 // workouts
 router
