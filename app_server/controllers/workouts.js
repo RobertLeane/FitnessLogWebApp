@@ -1,38 +1,53 @@
-/* GET 'home' page */
-const homelist = function(req, res){
+const request = require('request');
+
+const apiOptions = { 
+  server : 'http://localhost:3000' 
+}; 
+if (process.env.NODE_ENV === 'production') { 
+  apiOptions.server = 'https://fitnesslogwebapp.onrender.com'; 
+}
+
+const _renderHomepage = function(req, res, responseBody) {
+  let workoutsData = responseBody || [];
+  
   res.render('index', {
     title: 'Fitness log App',
-    pageHeader: { 
-      title: 'Hi Robert...', 
-      strapline: 'Track your workouts and progress' 
+    pageHeader: {
+      title: 'Hi Robert...',
+      strapline: 'Track your workouts and progress'
     },
     summary: {
       sessions: 3,
       totalTime: '2h 15m',
       averageDuration: '45m'
     },
-    workouts: [{ 
-      title: 'Running',
-      duration: '60 Minutes',
-      description: 'Morning run in the park',
-      intensity: 'High Intensity',
-      date: 'Sep 16 2025'
-    },{
-      title: 'Weight Training',
-      duration: '45 Minutes',
-      description: 'Chest and triceps focus',
-      intensity: 'Very High Intensity',
-      date: 'Sep 17 2025'
-    },{
-      title: 'Yoga',
-      duration: '30 Minutes',
-      description: 'Evening relaxation session',
-      intensity: 'Low Intensity',
-      date: 'Sep 17 2025'
-    }]
+    workouts: workoutsData
+  });
+};
+
+const homelist = function(req, res) {
+  const path = '/api/workouts';
+  const requestOptions = {
+    url: apiOptions.server + path,
+    method: 'GET',
+    json: {}
+  };
+  
+  request(requestOptions, (err, response, body) => {
+    if (err) {
+      console.log(err);
+      _renderHomepage(req, res, []);
+    } else if (response.statusCode === 200) {
+      console.log(body);
+      _renderHomepage(req, res, body);
+    } else {
+      console.log(response.statusCode);
+      _renderHomepage(req, res, []);
+    }
   });
 };
 
 module.exports = {
-homelist
+  homelist
 };
+

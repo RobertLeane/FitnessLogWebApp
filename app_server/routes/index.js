@@ -7,8 +7,10 @@ const ctrlUsers = require('../controllers/users');
 
 /* Main pages */
 router.get('/', ctrlWorkouts.homelist);
-router.get('/about', ctrlAbout.about);
 router.get('/login', ctrlUsers.login);
 router.get('/register', ctrlUsers.register);
+
+/* Other Pages */
+router.get('/about', ctrlAbout.about);
 
 module.exports = router;

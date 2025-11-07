@@ -1,5 +1,29 @@
-const mongoose = require('mongoose');
-const Users = mongoose.model('Users');
+const request = require('request');
+
+const apiOptions = { 
+  server : 'http://localhost:3000' 
+}; 
+if (process.env.NODE_ENV === 'production') { 
+  apiOptions.server = 'https://fitnesslogwebapp.onrender.com'; 
+}
+
+const requestOptions = {
+  url : 'http://localhost:3000/api/users', 
+  method : 'GET', 
+  json : {}, 
+  qs : { 
+  } 
+};
+
+request(requestOptions, (err, response, body) => {
+  if (err) {
+    console.log(err);
+  } else if (response.statusCode === 200) {
+    console.log(body);
+  } else {
+    console.log(response.statusCode);
+  }
+});
 
 /* GET login page */
 const login = function(req, res){

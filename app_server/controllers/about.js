@@ -1,26 +1,38 @@
-/* GET about page */
-const about = function(req, res){
-  const aboutData = {
-    title: 'About Fitness Log',
-    appName: 'Fitness Log',
-    tagline: 'Your personal fitness tracking companion',
-    description: 'Fitness Log is a simple and intuitive web application designed to help you track your workouts and monitor your fitness progress. Whether you\'re a beginner starting your fitness journey or an experienced athlete, our app provides the tools you need to stay motivated and organized.',
-    features: [
-      'Track workout sessions with detailed information',
-      'Monitor workout intensity levels',
-      'View weekly progress summaries',
-      'Clean, user-friendly interface'
-    ],
-    welcomeMessage: 'Ready to begin your fitness journey? Register for an account to start tracking your workouts and achieving your fitness goals.'
-  };
-  
+const request = require('request');
+
+const apiOptions = { 
+  server : 'http://localhost:3000' 
+}; 
+if (process.env.NODE_ENV === 'production') { 
+  apiOptions.server = 'https://fitnesslogwebapp.onrender.com'; 
+}
+
+const _renderAboutPage = function(req, res, aboutData) {
   res.render('about', { 
     title: 'About - Fitness Log',
-    aboutData: aboutData
+    aboutData: aboutData || {
+      title: 'About Fitness Log',
+      appName: 'Fitness Log',
+      tagline: 'Track your workouts and monitor your fitness progress.',
+      descriptions: 'Fitness Log is a comprehensive web application designed to help you track your workout sessions, monitor your progress, and achieve your fitness goals.',
+      features: [
+        'Log your workout sessions with ease',
+        'Track exercise duration and intensity',
+        'Monitor your weekly progress',
+        'View workout history and statistics',
+        'Set and achieve fitness goals'
+      ],
+      welcomeMessage: 'Start your fitness journey today! Sign up to create your account and begin tracking your workouts.'
+    }
   });
 };
 
-
+/* GET about page */
+const about = function(req, res){ 
+  // Render the about page directly with default data
+  // since the API endpoint requires an aboutid parameter
+  _renderAboutPage(req, res, null);
+};
 
 module.exports = {
   about

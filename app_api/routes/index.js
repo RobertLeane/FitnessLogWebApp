@@ -2,11 +2,17 @@ const express = require('express');
 const router = express.Router();
 const ctrlWorkouts = require('../controllers/workouts');
 const ctrlUsers = require('../controllers/users');
+const ctrlAbout = require('../controllers/about');
+
+// about
+router
+  .route('/about/:aboutid')
+  .get(ctrlAbout.aboutReadOne);
 
 // workouts
 router
   .route('/workouts')
-  .get(ctrlWorkouts.workoutsList);
+  .get(ctrlWorkouts._buildWorkoutsList);
 
 router
   .route('/workouts/:workoutid')
