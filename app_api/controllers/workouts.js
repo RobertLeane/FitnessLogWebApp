@@ -20,6 +20,28 @@ const _buildWorkoutsList = function (req, res, results) {
     return workoutList;
 };
 
+const workoutsList = function (req, res) {
+    Workout
+        .find()
+        .then((workouts) => {
+            if (!workouts || workouts.length === 0) {
+                res
+                    .status(200)
+                    .json([]);
+                return;
+            }
+            const workoutList = _buildWorkoutsList(req, res, workouts);
+            res
+                .status(200)
+                .json(workoutList);
+        })
+        .catch((err) => {
+            res
+                .status(500)
+                .json(err);
+        });
+};
+
 const workoutsReadOne = function (req, res) {
     if (req.params && req.params.workoutid) {
         Workout
@@ -52,6 +74,6 @@ const workoutsReadOne = function (req, res) {
 };
 
 module.exports = {
-    _buildWorkoutsList,
+    workoutsList,
     workoutsReadOne
 };

@@ -12,7 +12,7 @@ router
 // workouts
 router
   .route('/workouts')
-  .get(ctrlWorkouts._buildWorkoutsList);
+  .get(ctrlWorkouts.workoutsList);
 
 router
   .route('/workouts/:workoutid')
