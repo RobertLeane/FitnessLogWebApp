@@ -1,5 +1,6 @@
 import { NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpHeaders, HttpClientModule } from '@angular/common/http';
 
 import { WorkoutsList } from './workouts-list/workouts-list';
 
@@ -8,7 +9,8 @@ import { WorkoutsList } from './workouts-list/workouts-list';
     WorkoutsList
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

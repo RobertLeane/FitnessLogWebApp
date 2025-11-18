@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FitnessLogData } from '../fitnesslog-data';
 
-export class Location {
+export class Workout {
   id!: string;
   title!: string;
   duration!: number;
@@ -13,12 +14,24 @@ export class Location {
   selector: 'app-workouts-list',
   standalone: false,
   templateUrl: './workouts-list.html',
-  styleUrl: './workouts-list.css',
+  styleUrls: ['./workouts-list.css'],
+  providers: [FitnessLogData]
 })
 export class WorkoutsList implements OnInit {
   
-  constructor() { }
-  name = "Yoga";
-  ngOnInit() {}
+  constructor(private fitnessLogData: FitnessLogData) { }
+  
+  workouts: Workout[] = [];
+  private getWorkouts(): void {
+    this.fitnessLogData
+    .getWorkouts()
+    .then(foundWorkouts => {
+      this.workouts = foundWorkouts;
+    });
+  }
+
+  ngOnInit() {
+    this.getWorkouts();
+  }
 
 }
