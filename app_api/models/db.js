@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-const dbURI = 'mongodb+srv://loc8r_admin:kfnc8mSnNHXMts28@loc8r.t667etg.mongodb.net/FitnessLogDB?appName=Loc8r';
+require('dotenv').config();
+
+const dbURI = process.env.MONGO_URI
+
 
 
 try {
