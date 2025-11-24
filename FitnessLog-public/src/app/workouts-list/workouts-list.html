@@ -1,3 +1,33 @@
+<nav class="navbar navbar-expand-md bg-body border-dark rounded-0 border-2 shadow py-3">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <span><strong>🏃&nbsp;Fitness Log</strong></span>
+        </a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-1">
+            <span class="visually-hidden">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navcol-1" class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+            </ul>
+            <div class="d-flex gap-2 align-items-center">
+                <span class="text-muted me-2 d-flex align-items-center">
+                    <i class="bi bi-person-circle me-1"></i>
+                    r_leane05
+                </span>
+                <a class="btn btn-outline-primary" href="/login">Login</a>
+                <a class="btn btn-primary" href="/register">Register</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
 <div class="container py-4">
     <h1 class="text-center mb-1">
         <strong>Hi Robert...</strong>
@@ -14,7 +44,7 @@
                     <div class="card-body py-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="mb-0">🏆 Sessions</h4>
-                            <h4 class="mb-0 text-end">3</h4>
+                            <h4 class="mb-0 text-end">{{ totalSessions }}</h4>
                         </div>
                     </div>
                 </div>
@@ -22,7 +52,7 @@
                     <div class="card-body py-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="mb-0">⏱️ Total Time</h4>
-                            <h4 class="mb-0 text-end">2h 15m</h4>
+                            <h4 class="mb-0 text-end">{{ totalTime }}</h4>
                         </div>
                     </div>
                 </div>
@@ -30,7 +60,7 @@
                     <div class="card-body py-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="mb-0">⚡ Average Duration</h4>
-                            <h4 class="mb-0 text-end">45m</h4>
+                            <h4 class="mb-0 text-end">{{ averageDuration }}</h4>
                         </div>
                     </div>
                 </div>
@@ -40,43 +70,17 @@
             <h2 class="h4 mb-3">
                 <strong>Your Workouts</strong>
             </h2>
-            <div class="card border-dark-subtle shadow-sm mb-3">
+            <div *ngFor="let workout of workouts" class="card border-dark-subtle shadow-sm mb-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Yoga</h4>
-                        <p class="mb-0 text-nowrap">Sep 17 2025</p>
+                        <h4 class="mb-0">{{ workout.title }}</h4>
+                        <p class="mb-0 text-nowrap">{{ workout.date }}</p>
                     </div>
                     <div class="d-flex flex-wrap gap-3 mt-2">
-                        <h6 class="text-muted mb-0"> ⏱️ 30 Minutes</h6>
-                        <span class="badge bg-warning text-dark">Low Intensity</span>
+                        <h6 class="text-muted mb-0"> ⏱️ {{ workout.duration }}</h6>
+                        <span class="badge bg-warning text-dark">{{ workout.intensity }}</span>
                     </div>
-                    <p class="card-text mt-2"> 📝 Evening relaxation session</p>
-                </div>
-            </div>
-            <div class="card border-dark-subtle shadow-sm mb-3">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Running</h4>
-                        <p class="mb-0 text-nowrap">Sep 16 2025</p>
-                    </div>
-                    <div class="d-flex flex-wrap gap-3 mt-2">
-                        <h6 class="text-muted mb-0"> ⏱️ 60 Minutes</h6>
-                        <span class="badge bg-warning text-dark">High Intensity</span>
-                    </div>
-                    <p class="card-text mt-2"> 📝 Morning run in the park</p>
-                </div>
-            </div>
-            <div class="card border-dark-subtle shadow-sm mb-3">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Weight Training</h4>
-                        <p class="mb-0 text-nowrap">Sep 17 2025</p>
-                    </div>
-                    <div class="d-flex flex-wrap gap-3 mt-2">
-                        <h6 class="text-muted mb-0"> ⏱️ 45 Minutes</h6>
-                        <span class="badge bg-warning text-dark">Very High Intensity</span>
-                    </div>
-                    <p class="card-text mt-2"> 📝 Chest and triceps focus</p>
+                    <p class="card-text mt-2"> 📝 {{ workout.description }}</p>
                 </div>
             </div>
         </div>

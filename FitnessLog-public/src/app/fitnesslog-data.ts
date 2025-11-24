@@ -11,7 +11,17 @@ export class FitnessLogData {
   private apiBaseUrl = 'http://localhost:3000/api/';
 
   public getWorkouts() : Promise<Workout[]> {
-    // Our code will go here
-    return Promise.resolve([]);
+    const url: string = `${this.apiBaseUrl}workouts`;
+    return this.http
+      .get<Workout[]>(url)
+      .toPromise()
+      .then(response => {
+        console.log('Workouts received from API:', response);
+        return response || [];
+      })
+      .catch(error => {
+        console.error('Error fetching workouts:', error);
+        return [];
+      });
   }
 }

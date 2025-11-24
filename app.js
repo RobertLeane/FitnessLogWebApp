@@ -6,8 +6,9 @@ const cookieParser = require('cookie-parser');
 
 require('./app_api/models/db');
 
-const index = require('./app_server/routes/index');
 const apiRoutes = require('./app_api/routes/index');
+const ctrlAbout = require('./app_server/controllers/about');
+const ctrlUsers = require('./app_server/controllers/users');
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'app_public')));
+app.use(express.static(path.join(__dirname, 'FitnessLog-public', 'dist', 'FitnessLog-public', 'browser')));
 
 app.use('/api', function(req, res, next) {
   res.header('Access-Control-Allow-Origin','http://localhost:4200');
@@ -30,8 +31,22 @@ app.use('/api', function(req, res, next) {
   next();
 });
 
-app.use('/', index);
 app.use('/api', apiRoutes);
+
+// Serve Pug pages for specific routes (must come before Angular catch-all)
+app.get('/about', ctrlAbout.about);
+app.get('/login', ctrlUsers.login);
+app.get('/register', ctrlUsers.register);
+
+// Serve Angular app for home route
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'FitnessLog-public', 'dist', 'FitnessLog-public', 'browser', 'index.html'));
+});
+
+// Catch-all for any other routes - serve Angular app
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'FitnessLog-public', 'dist', 'FitnessLog-public', 'browser', 'index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

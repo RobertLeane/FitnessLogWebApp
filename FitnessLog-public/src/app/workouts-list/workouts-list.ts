@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FitnessLogData } from '../fitnesslog-data';
 
 export class Workout {
@@ -19,15 +19,52 @@ export class Workout {
 })
 export class WorkoutsList implements OnInit {
   
-  constructor(private fitnessLogData: FitnessLogData) { }
+  constructor(
+    private fitnessLogData: FitnessLogData,
+    private cdr: ChangeDetectorRef
+  ) { }
   
   workouts: Workout[] = [];
+  totalSessions: number = 0;
+  totalTime: string = '0h 0m';
+  averageDuration: string = '0m';
+
   private getWorkouts(): void {
+    console.log('Getting workouts...');
     this.fitnessLogData
     .getWorkouts()
     .then(foundWorkouts => {
+      console.log('Workouts received in component:', foundWorkouts);
       this.workouts = foundWorkouts;
+      console.log('Component workouts array:', this.workouts);
+      this.calculateStats();
+      this.cdr.detectChanges();
+    })
+    .catch(error => {
+      console.error('Error in getWorkouts:', error);
     });
+  }
+
+  private calculateStats(): void {
+    this.totalSessions = this.workouts.length;
+    
+    // Calculate total time (sum all durations)
+    const totalMinutes = this.workouts.reduce((sum, workout) => {
+      const duration = parseInt(workout.duration.toString()) || 0;
+      return sum + duration;
+    }, 0);
+    
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    this.totalTime = `${hours}h ${minutes}m`;
+    
+    // Calculate average duration
+    if (this.totalSessions > 0) {
+      const avgMinutes = Math.round(totalMinutes / this.totalSessions);
+      this.averageDuration = `${avgMinutes}m`;
+    } else {
+      this.averageDuration = '0m';
+    }
   }
 
   ngOnInit() {
