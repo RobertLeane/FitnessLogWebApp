@@ -8,6 +8,10 @@ block content
         h2 Register
     .row.d-flex.justify-content-center
       .col-md-6.col-xl-4(style='height: 600px;')
+        if error
+          .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+            = error
+            button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
         .card.mb-5
           .card-body.d-flex.flex-column.align-items-center(style='height: 580px;')
             .bs-icon-xl.bs-icon-circle.bs-icon-primary.my-4.bs-icon

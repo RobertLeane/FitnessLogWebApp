@@ -3,10 +3,16 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 require('./app_api/models/db');
+const mongoose = require('mongoose');
+const Users = mongoose.model('Users');
 
 const apiRoutes = require('./app_api/routes/index');
+const routes = require('./app_server/routes/index');
 const ctrlAbout = require('./app_server/controllers/about');
 const ctrlUsers = require('./app_server/controllers/users');
 
@@ -25,6 +31,21 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'FitnessLog-public', 'dist', 'FitnessLog-public', 'browser')));
 
+// Session configuration
+app.use(session({
+  secret: 'fitness-log-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // set to true if using HTTPS
+}));
+
+// Passport configuration
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(Users.authenticate()));
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());
+
 app.use('/api', function(req, res, next) {
   res.header('Access-Control-Allow-Origin','http://localhost:4200');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -33,10 +54,8 @@ app.use('/api', function(req, res, next) {
 
 app.use('/api', apiRoutes);
 
-// Serve Pug pages for specific routes (must come before Angular catch-all)
-app.get('/about', ctrlAbout.about);
-app.get('/login', ctrlUsers.login);
-app.get('/register', ctrlUsers.register);
+// Use the server routes
+app.use('/', routes);
 
 // Serve Angular app for home route
 app.get('/', function(req, res) {
