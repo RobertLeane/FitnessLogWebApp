@@ -28,8 +28,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'FitnessLog-public', 'dist', 'FitnessLog-public', 'browser')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Session configuration
 app.use(session({
@@ -54,15 +54,10 @@ app.use('/api', function(req, res, next) {
 
 app.use('/api', apiRoutes);
 
-// Use the server routes
+// Use the server routes - these must come before the Angular catch-all
 app.use('/', routes);
 
-// Serve Angular app for home route
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'FitnessLog-public', 'dist', 'FitnessLog-public', 'browser', 'index.html'));
-});
-
-// Catch-all for any other routes - serve Angular app
+// Serve Angular app for any unmatched routes
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'FitnessLog-public', 'dist', 'FitnessLog-public', 'browser', 'index.html'));
 });
@@ -84,5 +79,14 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//SSL Certificate
+var fs = require('fs');
+var https = require('https');
+var privateKey = fs.readFileSync('./sslcert/key.pem', 'utf8');
+var certificate = fs.readFileSync('./sslcert/cert.pem', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(443, () => console.log('HTTPS Server running on port 443'));
 
 module.exports = app;

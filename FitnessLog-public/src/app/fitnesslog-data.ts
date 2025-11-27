@@ -8,7 +8,7 @@ import { Workout } from './workouts-list/workouts-list';
 export class FitnessLogData {
   constructor(private http: HttpClient) { }
 
-  private apiBaseUrl = 'http://localhost:3000/api/';
+  private apiBaseUrl = 'https://localhost:443/api/';
 
   public getWorkouts() : Promise<Workout[]> {
     const url: string = `${this.apiBaseUrl}workouts`;
