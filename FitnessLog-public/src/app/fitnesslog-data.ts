@@ -8,7 +8,17 @@ import { Workout } from './workouts-list/workouts-list';
 export class FitnessLogData {
   constructor(private http: HttpClient) { }
 
-  private apiBaseUrl = 'https://localhost:443/api/';
+  private apiBaseUrl = this.getApiBaseUrl();
+
+  private getApiBaseUrl(): string {
+    // In production (Render), use relative URL so it uses the same domain
+    // In development, use localhost:443
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return 'https://localhost:443/api/';
+    } else {
+      return '/api/';
+    }
+  }
 
   public getWorkouts() : Promise<Workout[]> {
     const url: string = `${this.apiBaseUrl}workouts`;
