@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const fs = require('fs');
+const https = require('https');
 
 require('./app_api/models/db');
 const mongoose = require('mongoose');
@@ -86,13 +88,21 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//SSL Certificate
-var fs = require('fs');
-var https = require('https');
-var privateKey = fs.readFileSync('./sslcert/key.pem', 'utf8');
-var certificate = fs.readFileSync('./sslcert/cert.pem', 'utf8');
-var credentials = {key: privateKey, cert: certificate};
-var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(443, () => console.log('HTTPS Server running on port 443'));
+// Start server - use HTTPS locally, HTTP on Render
+const port = process.env.PORT || 443;
+
+if (process.env.NODE_ENV === 'production' || !fs.existsSync('./sslcert/key.pem')) {
+  // Production (Render) - use HTTP, Render handles SSL
+  app.listen(port, () => {
+    console.log(`HTTP Server running on port ${port}`);
+  });
+} else {
+  // Local development - use HTTPS
+  var privateKey = fs.readFileSync('./sslcert/key.pem', 'utf8');
+  var certificate = fs.readFileSync('./sslcert/cert.pem', 'utf8');
+  var credentials = {key: privateKey, cert: certificate};
+  var httpsServer = https.createServer(credentials, app);
+  httpsServer.listen(port, () => console.log(`HTTPS Server running on port ${port}`));
+}
 
 module.exports = app;
