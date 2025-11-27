@@ -30,7 +30,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'FitnessLog-public', 'dist', 'FitnessLog-public', 'browser')));
+app.use(express.static(path.join(__dirname, 'app_public', 'build', 'browser')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Session configuration
@@ -67,7 +67,7 @@ app.use('/', routes);
 
 // Serve Angular app for any unmatched routes
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'FitnessLog-public', 'dist', 'FitnessLog-public', 'browser', 'index.html'));
+  res.sendFile(path.join(__dirname, 'app_public', 'build', 'browser', 'index.html'));
 });
 
 // catch 404 and forward to error handler
