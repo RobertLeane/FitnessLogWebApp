@@ -20,6 +20,10 @@ router
 
 // users
 router
+  .route('/users/current')
+  .get(ctrlUsers.usersGetCurrent);
+
+router
   .route('/users/register')
   .post(ctrlUsers.usersCreate);
 

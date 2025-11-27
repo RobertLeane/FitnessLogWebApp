@@ -24,4 +24,16 @@ export class FitnessLogData {
         return [];
       });
   }
+
+  public getCurrentUser(): Promise<any> {
+    const url: string = `${this.apiBaseUrl}users/current`;
+    return this.http
+      .get(url, { withCredentials: true })
+      .toPromise()
+      .then(response => response)
+      .catch(error => {
+        console.error('Error fetching current user:', error);
+        return null;
+      });
+  }
 }

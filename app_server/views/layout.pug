@@ -31,11 +31,14 @@ html
             li.nav-item
               a.nav-link(href='/about') About
           .d-flex.gap-2.align-items-center
-            span.text-muted.me-2.d-flex.align-items-center
-              i.bi.bi-person-circle.me-1
-              | r_leane05
-            a.btn.btn-outline-primary(href='/login') Login
-            a.btn.btn-primary(href='/register') Register
+            if currentUser
+              span.text-muted.me-2.d-flex.align-items-center
+                i.bi.bi-person-circle.me-1
+                | #{currentUser.email}
+              a.btn.btn-outline-danger(href='/logout') Logout
+            else
+              a.btn.btn-outline-primary(href='/login') Login
+              a.btn.btn-primary(href='/register') Register
     
     block content
     

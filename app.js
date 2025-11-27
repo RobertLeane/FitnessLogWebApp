@@ -42,9 +42,15 @@ app.use(session({
 // Passport configuration
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(Users.authenticate()));
+passport.use(new LocalStrategy({ usernameField: 'email' }, Users.authenticate()));
 passport.serializeUser(Users.serializeUser());
 passport.deserializeUser(Users.deserializeUser());
+
+// Make user available to all templates
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 app.use('/api', function(req, res, next) {
   res.header('Access-Control-Allow-Origin','http://localhost:4200');

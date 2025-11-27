@@ -17,12 +17,17 @@
                 </li>
             </ul>
             <div class="d-flex gap-2 align-items-center">
-                <span class="text-muted me-2 d-flex align-items-center">
-                    <i class="bi bi-person-circle me-1"></i>
-                    r_leane05
-                </span>
-                <a class="btn btn-outline-primary" href="/login">Login</a>
-                <a class="btn btn-primary" href="/register">Register</a>
+                <ng-container *ngIf="isAuthenticated">
+                    <span class="text-muted me-2 d-flex align-items-center">
+                        <i class="bi bi-person-circle me-1"></i>
+                        {{ userEmail }}
+                    </span>
+                    <a class="btn btn-danger" href="/logout">Logout</a>
+                </ng-container>
+                <ng-container *ngIf="!isAuthenticated">
+                    <a class="btn btn-outline-primary" href="/login">Login</a>
+                    <a class="btn btn-primary" href="/register">Register</a>
+                </ng-container>
             </div>
         </div>
     </div>
@@ -30,7 +35,7 @@
 
 <div class="container py-4">
     <h1 class="text-center mb-1">
-        <strong>Hi Robert...</strong>
+        <strong>Hi {{userFirstName}}...</strong>
     </h1>
     <p class="text-center text-muted mb-4">Track your workouts and progress</p>
     <div class="row g-4">

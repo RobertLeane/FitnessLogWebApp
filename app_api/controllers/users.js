@@ -103,6 +103,24 @@ const usersLogin = function(req, res) {
         });
 };
 
+const usersGetCurrent = function(req, res) {
+    if (req.user) {
+        res
+            .status(200)
+            .json({
+                firstName: req.user.firstName,
+                lastName: req.user.lastName,
+                email: req.user.email
+            });
+    } else {
+        res
+            .status(401)
+            .json({
+                "message": "Not authenticated"
+            });
+    }
+};
+
 const usersReadOne = function(req, res) {
     if (req.params && req.params.userid) {
         Users
@@ -137,5 +155,6 @@ const usersReadOne = function(req, res) {
 module.exports = {
     usersCreate,
     usersLogin,
-    usersReadOne
+    usersReadOne,
+    usersGetCurrent
 };

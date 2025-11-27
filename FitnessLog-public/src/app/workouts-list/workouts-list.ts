@@ -28,6 +28,9 @@ export class WorkoutsList implements OnInit {
   totalSessions: number = 0;
   totalTime: string = '0h 0m';
   averageDuration: string = '0m';
+  userFirstName: string = '';
+  userEmail: string = '';
+  isAuthenticated: boolean = false;
 
   private getWorkouts(): void {
     console.log('Getting workouts...');
@@ -69,6 +72,23 @@ export class WorkoutsList implements OnInit {
 
   ngOnInit() {
     this.getWorkouts();
+    this.getCurrentUser();
+  }
+
+  private getCurrentUser(): void {
+    this.fitnessLogData.getCurrentUser()
+      .then(user => {
+        if (user) {
+          this.userFirstName = user.firstName || 'User';
+          this.userEmail = user.email || '';
+          this.isAuthenticated = true;
+          this.cdr.detectChanges();
+        }
+      })
+      .catch(err => {
+        console.log('Not logged in or error fetching user');
+        this.isAuthenticated = false;
+      });
   }
 
 }
