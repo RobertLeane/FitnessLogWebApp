@@ -23,7 +23,7 @@ export class FitnessLogData {
   public getWorkouts() : Promise<Workout[]> {
     const url: string = `${this.apiBaseUrl}workouts`;
     return this.http
-      .get<Workout[]>(url)
+      .get<Workout[]>(url, { withCredentials: true })
       .toPromise()
       .then(response => {
         console.log('Workouts received from API:', response);
