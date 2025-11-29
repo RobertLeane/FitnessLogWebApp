@@ -71,7 +71,6 @@ export class WorkoutsList implements OnInit {
   }
 
   ngOnInit() {
-    this.getWorkouts();
     this.getCurrentUser();
   }
 

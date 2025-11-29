@@ -75,6 +75,12 @@
             <h2 class="h4 mb-3">
                 <strong>Your Workouts</strong>
             </h2>
+            <div *ngIf="!isAuthenticated" class="alert alert-info" role="alert">
+                Please <a href="/login" class="alert-link">login</a> or <a href="/register" class="alert-link">register</a> to view your workouts.
+            </div>
+            <div *ngIf="isAuthenticated && workouts.length === 0" class="alert alert-info" role="alert">
+                No workouts found.
+            </div>
             <div *ngFor="let workout of workouts" class="card border-dark-subtle shadow-sm mb-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
