@@ -77,11 +77,14 @@ export class WorkoutsList implements OnInit {
   private getCurrentUser(): void {
     this.fitnessLogData.getCurrentUser()
       .then(user => {
-        if (user) {
+        if (user && user.email) {
           this.userFirstName = user.firstName || 'User';
-          this.userEmail = user.email || '';
+          this.userEmail = user.email;
           this.isAuthenticated = true;
+          this.getWorkouts();
           this.cdr.detectChanges();
+        } else {
+          this.isAuthenticated = false;
         }
       })
       .catch(err => {
