@@ -38,7 +38,12 @@ app.use(session({
   secret: 'fitness-log-secret-key',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true }
+  cookie: { 
+    secure: true, // Always true since I use HTTPS both locally (port 443) and in production (Render)
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+  }
 }));
 
 // Passport configuration
@@ -54,10 +59,21 @@ app.use(function(req, res, next) {
   next();
 });
 
+// CORS configuration for API routes
 app.use('/api', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin','http://localhost:4200');
+  // Allow requests from same origin (https://localhost:443)
+  const origin = req.headers.origin;
+  if (origin) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
   next();
 });
 
