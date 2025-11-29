@@ -38,7 +38,7 @@ app.use(session({
   secret: 'fitness-log-secret-key',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // set to true if using HTTPS
+  cookie: { secure: true }
 }));
 
 // Passport configuration
