@@ -33,6 +33,9 @@
             ],
             "styles": [
               "src/styles.css"
+            ],
+            "scripts": [
+              "public/javascripts/bootstrap.min.js"
             ]
           },
           "configurations": {
