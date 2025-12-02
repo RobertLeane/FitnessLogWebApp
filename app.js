@@ -38,10 +38,12 @@ app.use(session({
   secret: 'fitness-log-secret-key',
   resave: false,
   saveUninitialized: false,
+  //Below fix was provided by Github Copilot (model=Claude Sonnet 4.5)
+  proxy: process.env.NODE_ENV === 'production', // Trust the reverse proxy (Render)
   cookie: { 
-    secure: true, // Always true since I use HTTPS both locally (port 443) and in production (Render)
+    secure: process.env.NODE_ENV === 'production' ? true : true, // Always HTTPS
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-site on Render
     maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
   }
 }));
