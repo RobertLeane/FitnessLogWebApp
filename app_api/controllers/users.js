@@ -103,6 +103,7 @@ const usersLogin = function(req, res) {
         });
 };
 
+//For displaying currently logged in user
 const usersGetCurrent = function(req, res) {
     if (req.user) {
         res

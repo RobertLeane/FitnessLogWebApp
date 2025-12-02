@@ -20,6 +20,7 @@ const _buildWorkoutsList = function (req, res, results) {
     return workoutList;
 };
 
+// To display list of workouts
 const workoutsList = function (req, res) {
     Workout
         .find()

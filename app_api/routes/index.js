@@ -6,6 +6,10 @@ const ctrlAbout = require('../controllers/about');
 
 // about
 router
+  .route('/about')
+  .get(ctrlAbout.aboutRead);
+
+router
   .route('/about/:aboutid')
   .get(ctrlAbout.aboutReadOne);
 

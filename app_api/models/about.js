@@ -9,4 +9,4 @@ const aboutSchema = new mongoose.Schema({
   welcomeMessage: String
 });
 
-mongoose.model('About', aboutSchema);
+mongoose.model('about', aboutSchema, 'about');
