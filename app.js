@@ -118,7 +118,7 @@ if (process.env.NODE_ENV === 'production' || !fs.existsSync('./sslcert/key.pem')
 } else {
   // Local development - use HTTPS
   var privateKey = fs.readFileSync('./sslcert/key.pem', 'utf8');
-  var certificate = fs.readFileSync('./sslcert/cert.pem', 'utf8');
+  var certificate = fs.readFileSync('./sslcert/cert.cer', 'utf8');
   var credentials = {key: privateKey, cert: certificate};
   var httpsServer = https.createServer(credentials, app);
   httpsServer.listen(port, () => console.log(`HTTPS Server running on port ${port}`));
